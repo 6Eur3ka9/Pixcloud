@@ -18,7 +18,7 @@ const Navbar = () => {
                     </div>
                     <div className="flex space-x-4">
                         <a
-                            href="#"
+                            href="/login"
                             className="px-4 py-2 rounded-md text-sm font-medium transform transition-transform duration-200"
                             style={{
                                 backgroundColor: "rgba(164, 6, 255, 0.5)",
@@ -28,6 +28,7 @@ const Navbar = () => {
                             onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
                         >
                             se connecter
+                            
                         </a>
                         <a
                             href="#"

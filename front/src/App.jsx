@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainPage from './routes/mainPage';
+import LoginPage from './routes/loginPage';
+import { UserProvider } from './service/context.provider';
 
 
 
@@ -18,11 +20,16 @@ function App() {
           width: '100%',
         }}
       >
+        <UserProvider>
+
         <Router>
           <Routes>
             <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            {/* <Route path="/register" element={<RegisterPage />} /> */}
           </Routes>
         </Router>
+        </UserProvider>
       </div>
     </>
   )
