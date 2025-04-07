@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainPage from './routes/mainPage';
+
+
 
 
 
@@ -7,10 +10,20 @@ function App() {
   
   return (
     <>
-
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100"> 
-        <h1 className="text-3xl font-bold text-blue-600">Welcome to Vite + React + Tailwind CSS</h1>
-        </div>
+      <div
+        style={{
+          overflow: 'hidden',
+          height: '100vh',
+          position: 'fixed',
+          width: '100%',
+        }}
+      >
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+          </Routes>
+        </Router>
+      </div>
     </>
   )
 }
