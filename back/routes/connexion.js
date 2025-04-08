@@ -1,10 +1,19 @@
 const express = require('express')
+const User = require('../models/User');
+const UserService = require('../models/')
 const app = express() //L'app va exécuter la function express
+const cors = require('cors');
 
 const getUser = multer({ storage: storage }); //Je range l'utilisateur dans le storage ??
+const user = await User.findOne({ name: req.body.name });
+
+axios.get('http://localhost:3000/users')
+
+app.use(cors());
 
 app.get('/users', (req, res) => { //J'attends une requête et une réponse
-    res.json(user)
+    req.json(User.findOne({ name: req.body.name }));
+    res.json(user);
 })
 
 //Ici on va vérifier si le mot de passe et le nom donnés correspondent à un profil enregistré dans la DB
@@ -29,3 +38,6 @@ app.post('/users/login', async (req, res) => {
 })
 
 app.listen(3000) //L'app va s'exécuter sur le serveur 3000
+
+
+module.exports = router;
