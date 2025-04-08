@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ImageSchema = new Schema({
     image: {
         format: ['.jpeg', '.png', '.gif', '.svg', '.pdf'],
-
+        unique: false,
     },
     upload_date: {
         type: Date,
