@@ -22,11 +22,11 @@ const MainPage = () => {
           <p className="text-lg lg:text-xl mb-6">
             Stocker gratuitement jusqu'à 100 images.
           </p>
-          <button 
+          <a href='/register'
             className="bg-[rgba(255,6,10,0.73)] text-white border-none py-3 px-6 rounded cursor-pointer font-semibold transform transition-transform duration-200 hover:scale-105"
           >
             commencer dès maintenant
-          </button>
+          </a>
         </div>
       </div>
       <Footer />

@@ -53,7 +53,7 @@ const LoginPage = ({ navigation }) => {
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
             <Nav />
             <div className="flex-1 flex justify-center items-center px-6 lg:px-20">
-                <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+                <div className="bg-white border-[0.5px] rounded-lg shadow-lg p-8 w-full max-w-md">
                     <h2 className="text-center text-2xl font-semibold mb-6">Connexion</h2>
                     <form onSubmit={loginForm}>
                         <div className="mb-4">
@@ -86,7 +86,7 @@ const LoginPage = ({ navigation }) => {
                             <a href="#" className="text-sm text-[#A406FF] hover:underline">
                                 mot de passe oublier?
                             </a>
-                            <a href="#" className="text-sm text-[#A406FF] hover:underline">
+                            <a href="/register" className="text-sm text-[#A406FF] hover:underline">
                                 pas de compte ? creer un compte
                             </a>
                         </div>

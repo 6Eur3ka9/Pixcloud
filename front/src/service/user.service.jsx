@@ -1,7 +1,7 @@
 import AxiosClient from "./caller.service";
 
 const resgister = (data) => {
-    return AxiosClient.post('user', data);
+    return AxiosClient.post('/register', data);
        
 }
 

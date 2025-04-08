@@ -31,7 +31,7 @@ const Navbar = () => {
                             
                         </a>
                         <a
-                            href="#"
+                            href="/register"
                             className="px-4 py-2 rounded-md text-sm font-medium transform transition-transform duration-200"
                             style={{
                                 backgroundColor: "rgba(164, 6, 255, 0.5)",
