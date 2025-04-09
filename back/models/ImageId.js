@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ImageIdSchema = new Schema({
   image: {
-    type: String,
+    type: ['.jpg', '.jpeg', '.png'],
     required: true,
     unique: true,
   },
