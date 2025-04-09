@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 const db = client.db(Pixcloud);
 const bucket = new mongodb.GridFSBucket(db);
 
+
+//https://www.mongodb.com/docs/drivers/node/current/fundamentals/gridfs/
+
 const ImageSchema = new Schema({
     image: {
         format: ['.jpeg', '.png', '.gif', '.svg', '.pdf'],
