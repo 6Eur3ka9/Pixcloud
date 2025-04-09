@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const gridfs = require('gridfs');
 const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
