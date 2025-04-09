@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const gridfs = require('gridfs');
 const Schema = mongoose.Schema;
+const db = client.db(Pixcloud);
+const bucket = new mongodb.GridFSBucket(db);
 
 const ImageSchema = new Schema({
     image: {
