@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import image from '../assets/image.png';
+import { UserService } from '../service/user.service';
 
 function CloudPage() {
+
+    useEffect(() => {
+        const userid = localStorage.getItem('userId');
+        if (!userid) {
+            window.location.href = '/login';
+        }
+        UserService.getUserById(userid)
+            .then((response) => {
+                console.log(response.data);
+            }).catch((error) => {
+                console.error(error);
+            });
+
+            
+        console.log('User ID:', userid);
+        
+    }, []);
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
             <Navbar />

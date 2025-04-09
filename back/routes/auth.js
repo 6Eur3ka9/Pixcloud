@@ -54,4 +54,40 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/user/:userid', async (req, res) => {
+  const { userid } = req.params;
+  try {
+    const user = await User.findById(userid).select('-password'); // Exclude password field
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving user data' });
+    console.error(error);
+  }
+});
+
+router.put('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ message: 'Login successful', token, userId: user._id });
+  } catch (error) {
+    res.status(500).json({ error: 'Error logging in' });
+    console.error(error);
+  }
+});
+
 module.exports = router;
