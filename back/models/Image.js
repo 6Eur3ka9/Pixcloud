@@ -1,6 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const db = client.db(Pixcloud);
+
+const ImageSchema = new Schema({
+    imageData: {
+      type: String,
+      required: true,
+      unique: true,
+      match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, //Formats acceptés
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    uploaded_at: {
+      type: Date,
+     
+      default: Date.now,
+    },
+  });
+
+module.exports = mongoose.model('Image', ImageSchema);
+
+/*const db = client.db(Pixcloud);
 
 //https://www.mongodb.com/docs/drivers/node/current/fundamentals/gridfs/
 
@@ -48,8 +69,4 @@ mongo.connect(url, { //Initialise une connexion à MongoDB à l'addresse 'url' (
             }
         };
     }
-});
-
-
-
-module.exports = mongoose.model('Image', ImageSchema);
+});*/
