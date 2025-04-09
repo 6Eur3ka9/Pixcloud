@@ -52,7 +52,7 @@ mongo.connect(url, { //Initialise une connexion à MongoDB à l'addresse 'url' (
 
 const ImageSchema = new Schema({
     image: {
-        format: ['.jpeg', '.png', '.gif', '.svg'],
+        format: ['.jpeg', '.png', '.jpg'],
         unique: false,
     },
     upload_date: {
