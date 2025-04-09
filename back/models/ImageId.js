@@ -9,6 +9,10 @@ const ImageIdSchema = new Schema({
             unique: true,
             match: /\.(jpg|jpeg|png)$/i,
         },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
         uploaded_at: {
             type: Date,
             default: Date.now,
