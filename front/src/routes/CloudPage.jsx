@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import image from '../assets/image.png';
+import logo from '../assets/logo.png';
 import { UserService } from '../service/user.service';
 
 function CloudPage() {
+    const [username, setusername] = useState('');
+    
 
     useEffect(() => {
         const userid = localStorage.getItem('userId');
@@ -14,17 +17,38 @@ function CloudPage() {
         UserService.getUserById(userid)
             .then((response) => {
                 console.log(response.data);
+                console.log('username:', response.data.username);
+                setusername(response.data.username);
             }).catch((error) => {
                 console.error(error);
             });
 
-            
+
         console.log('User ID:', userid);
+        
         
     }, []);
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
-            <Navbar />
+             <nav
+                        className="bg-white text-black"
+                        style={{
+                            boxShadow: "0px -1px 7px 12px rgba(238, 26, 26, 0.8)",
+                        }}
+                    >
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between h-18">
+                                <div className="flex items-center">
+                                    <a href="/" >
+                                        <img src={logo} alt="Logo" className="h-22 mt-6  " />
+                                    </a>
+                                </div>
+                                <div className="flex space-x-4">
+                                    <h3 className=' font-bold'>{username}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
             <div className="flex-1 px-6 lg:px-20 flex items-center">
                 <div
                     

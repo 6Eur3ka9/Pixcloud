@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Nav from '../components/navbar';
 import Footer from '../components/footer';
 import  { useState } from 'react';
 import { useUser } from '../service/context.provider';
 import { UserService } from '../service/user.service';
 
-const LoginPage = ({ navigation }) => {
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {
         connectedUserId,
         setConnectedUserId,
-        connectedUserEmail,
-        setConnectedUserEmail,
+        connectedUserToken,
+        setConnectedUserToken,
         connectedUserPassword,
         setConnectedUserPassword
     } = useUser();
+
+    useEffect(() => {
+        console.log("connectedUserId a été mis à jour :", connectedUserId , connectedUserToken, connectedUserPassword);
+
+        let userId = localStorage.getItem('userId');
+        let userToken = localStorage.getItem('userToken')
+        if(userId || userToken ){
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userToken')
+        }else{
+            localStorage.setItem('userId', connectedUserId);
+            localStorage.setItem('userToken', connectedUserToken);
+        }
+
+
+      }, [connectedUserId, connectedUserToken, connectedUserPassword]);
 
 
     const loginForm = (e) => {
         e.preventDefault();
         
+
         const data = {
             email: email,
             password: password,
@@ -30,14 +47,16 @@ const LoginPage = ({ navigation }) => {
             .login(data)
             .then((response) => {
                 console.log(response.data);
-                setConnectedUserId(response.data.id);
-                setConnectedUserEmail(response.data.email);
+                console.log(data);
+                
+                setConnectedUserId(response.data.userId);
+                setConnectedUserToken(response.data.token);
                 setConnectedUserPassword(data.password);
 
-                console.log(connectedUserId, connectedUserEmail, connectedUserPassword);
+                console.log(connectedUserId, connectedUserToken, connectedUserPassword);
                 if(response.status === 200){
                     
-                    navigation.navigate('mainPage');
+                  window.location.href = '/mainpage';
                 }
             })
             .catch((error) => {

@@ -34,15 +34,10 @@ function Sign() {
         console.log(data);
         UserService.resgister(data)
             .then((response) => {
-                console.log(response.data.userId);
-                let userId = localStorage.getItem('userId');
-                if(userId){
-                    localStorage.removeItem('userId');
-                }
-                userId = response.data.userId;
-                localStorage.setItem('userId', userId);
+               
+                
                 if(response.status === 201){
-                    window.location.href = '/mainpage';
+                    window.location.href = '/login';
                 }
             })
             .catch((error) => {

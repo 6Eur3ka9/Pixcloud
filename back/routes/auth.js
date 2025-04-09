@@ -6,6 +6,7 @@ const multer = require('multer');
 const router = express.Router();
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
+require('dotenv').config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -82,6 +83,8 @@ router.put('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
+    console.log('userid is:', user._id);
+    
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ message: 'Login successful', token, userId: user._id });
   } catch (error) {
