@@ -2,22 +2,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
-    imageData: {
-      type: String,
-      required: true,
-      unique: true,
-      match: /\.(jpg|jpeg|png)$/i, //Formats acceptés
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
-    uploaded_at: {
-      type: Date,
-     
-      default: Date.now,
-    },
-  });
+    userImage: {
+        url: { //url (soit l'image)
+            type: String,
+            name: String,
+            required: true,
+            unique: true,
+        },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+        uploaded_at: {
+            type: Date,
+            default: Date.now,
+        },
+    }
+});
 
 module.exports = mongoose.model('Image', ImageSchema);
 
