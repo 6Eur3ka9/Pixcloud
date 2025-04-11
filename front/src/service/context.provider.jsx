@@ -1,23 +1,36 @@
-import { createContext, useContext, useState } from "react";
-import AxiosClient from "./caller.service";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [connectedUserId, setConnectedUserId] = useState(null);
-    const [connectedUserToken, setConnectedUserToken] = useState(null);
-    const [connectedUserPassword, setConnectedUserPassword] = useState(null);
+  const [connectedUserId, setConnectedUserId] = useState(null);
+  const [connectedUserToken, setConnectedUserToken] = useState(null);
+  const [connectedUserPassword, setConnectedUserPassword] = useState(null);
 
-  
+  // Au montage, réhydrate depuis localStorage
+  useEffect(() => {
+    const storedId = localStorage.getItem("userId");
+    const storedToken = localStorage.getItem("userToken");
+    const storedPassword = localStorage.getItem("userPassword");
+    if (storedId) setConnectedUserId(storedId);
+    if (storedToken) setConnectedUserToken(storedToken);
+    if (storedPassword) setConnectedUserPassword(storedPassword);
+  }, []);
 
-
-    return (
-        <UserContext.Provider value={{ connectedUserId, setConnectedUserId, connectedUserToken, setConnectedUserToken, connectedUserPassword, setConnectedUserPassword }}>
-            {children}
-        </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider
+      value={{
+        connectedUserId,
+        setConnectedUserId,
+        connectedUserToken,
+        setConnectedUserToken,
+        connectedUserPassword,
+        setConnectedUserPassword,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
-export const useUser = () => {
-    return useContext(UserContext);
-}
+export const useUser = () => useContext(UserContext);

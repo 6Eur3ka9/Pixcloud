@@ -1,7 +1,22 @@
 import React from "react";
 import logo from "../assets/logo.png";
+import { useUser } from "../service/context.provider";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+
+    const navigate = useNavigate();
+    const { connectedUserToken } = useUser();
+
+    const handleClick = () => {
+        if (connectedUserToken) {
+          navigate('/mainpage');
+        } else {
+          navigate('/');
+        }
+      };
+
     return (
         <nav
             className="bg-white text-black"
@@ -12,9 +27,9 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-18">
                     <div className="flex items-center">
-                        <a href="/" >
+                        <div onClick={handleClick} className="cursor-pointer">
                             <img src={logo} alt="Logo" className="h-22 mt-6  " />
-                        </a>
+                        </div>
                     </div>
                     <div className="flex space-x-4">
                         <a

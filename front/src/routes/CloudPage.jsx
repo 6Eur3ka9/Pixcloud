@@ -11,6 +11,9 @@ function CloudPage() {
 
     useEffect(() => {
         const userid = localStorage.getItem('userId');
+        const token = localStorage.getItem('userToken');
+        console.log('Token:', token);
+        
         if (!userid) {
             window.location.href = '/login';
         }
@@ -28,6 +31,18 @@ function CloudPage() {
         
         
     }, []);
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            console.log('File uploaded:', file);
+          
+        }
+    };
+
+    const handleDelete = () => {
+
+    } 
+
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
              <nav
@@ -44,14 +59,14 @@ function CloudPage() {
                                     </a>
                                 </div>
                                 <div className="flex space-x-4">
-                                    <h3 className=' font-bold'>{username}</h3>
+                                    <a href='/edit' className=' font-bold text-xl hover:scale-110 duration-300 ease-in-out cursor-pointer' >{username}</a>
+                                    
                                 </div>
                             </div>
                         </div>
                     </nav>
             <div className="flex-1 px-6 lg:px-20 flex items-center">
                 <div
-                    
                     className="border border-black p-64 rounded flex-1 overflow-auto relative"
                     style={{ maxHeight: '500px' }}
                 >
@@ -64,21 +79,29 @@ function CloudPage() {
                         ))}
                     </div>
                 </div>
-                <div className="flex flex-col space-y-[100%] ml-10">
-                    <button className="bg-purple-600 w-50 text-center font-bold flex flex-col items-center rounded-sm">
+                
+                <div id='button' className="flex flex-col space-y-[100%] ml-10 ">
+                    <label className="bg-purple-600 w-50 text-center font-bold flex flex-col items-center rounded-sm cursor-pointer hover:scale-105 duration-300 ease-in-out">
                         <img
                             src={image}
                             alt="image"
                             className="w-24 mt-10 mb-10"
                         />
-                        <p className="block">
+                        <span className="block">
                             Cliquez pour sélectionner l'image à ajouter
-                        </p>
-                    </button>
-                    <button className="bg-red-500 font-bold pl-10 pr-10 pt-2 pb-2 rounded-sm cursor-pointer hover:scale-110 duration-300 ease-in-out">
+                        </span>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileUpload}
+                            className="hidden"
+                        />
+                    </label>
+                    <button  onClick={handleDelete} className="bg-red-500 font-bold pl-10 pr-10 pt-2 pb-2 rounded-sm cursor-pointer hover:scale-110 duration-300 ease-in-out">
                         Supprimer
                     </button>
                 </div>
+              
             </div>
             <Footer />
         </div>
