@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ImageIdSchema = new Schema({
-    user: {
-        image: {
+    userImages: {
+        url: {
+            _id: id,
             type: String,
             required: true,
             unique: true,
-            match: /\.(jpg|jpeg|png)$/i,
         },
         date: {
           type: Date,
@@ -20,4 +20,4 @@ const ImageIdSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('ImageId', ImageIdSchema);
+module.exports = mongoose.model('ImageId', ImageIdSchema);*/
