@@ -94,10 +94,10 @@ router.put('/login', async (req, res) => {
 });
 
 router.put('/edit/username', async (req, res) => {
-  const { userId, username, email, password } = req.body;
+  const { userId, username } = req.body;
   try {
     if (!userId || !username) {
-      return res.status(400).json({ error: 'All fields are required' });
+      return res.status(400).json({ error: 'rentrer un nom d\'utilisateur valide' });
     }
   
     const updatedUser = await User.findByIdAndUpdate(
@@ -119,14 +119,14 @@ router.put('/edit/password', async (req, res) => {
   const { userId, password } = req.body;
   try {
     if (!userId || !password) {
-      return res.status(400).json({ error: 'All fields are required' });
+      return res.status(400).json({ error: 'rentrer un mot de passe valide' });
     }
   
     const hashedPassword = await bcrypt.hash(password, 10);
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { password: hashedPassword },
-      { new: true }
+      { new: true , runValidators: true, context: 'query' }
     );
     if (!updatedUser) {
       return res.status(404).json({ error: 'User not found' });
@@ -142,20 +142,20 @@ router.put('/edit/email', async (req, res) => {
   const { userId, email } = req.body;
   try {
     if (!userId || !email) {
-      return res.status(400).json({ error: 'All fields are required' });
+      return res.status(400).json({ error: 'Veuillez rentrer un email valide' });
     }
   
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { email },
-      { new: true }
+      { new: true, runValidators: true, context: 'query' }
     );
     if (!updatedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(200).json({ message: 'User updated successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Error updating user' });
+    res.status(500).json({ error: 'Email non valide' });
     console.error(error);
   }
 });

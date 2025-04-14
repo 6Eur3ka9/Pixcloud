@@ -19,13 +19,17 @@ const EditPage = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [userId, setUserId] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+
 
     const {
         setConnectedUserToken,
         setConnectedUserId,
         setConnectedUserPassword
-      } = useUser();
-      const navigate = useNavigate();
+    } = useUser();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const userid = localStorage.getItem('userId');
@@ -52,8 +56,8 @@ const EditPage = () => {
 
 
     const changeUsername = () => {
-        
-  
+
+
         const data = {
             userId: userId,
             username: newUsername,
@@ -66,7 +70,9 @@ const EditPage = () => {
                 console.log(response.data);
                 if (response.status === 200) {
                     setusername(newUsername);
-                    
+                    setEditingField(null);
+                    setUsernameError('');
+
                 }
             })
             .catch((error) => {
@@ -86,11 +92,18 @@ const EditPage = () => {
             .then((response) => {
                 console.log(response.data);
                 if (response.status === 200) {
-                   setEmail(newEmail);
+                    setEmail(newEmail);
+                    setEditingField(null);
+                    setEmailError('');
                 }
             })
             .catch((error) => {
                 console.error(error);
+                if (error.response && error.response.data && error.response.data.error) {
+                    setEmailError(error.response.data.error);
+                } else {
+                    setEmailError("Une erreur est survenue lors de la mise à jour");
+                }
             });
     }
 
@@ -106,7 +119,12 @@ const EditPage = () => {
         UserService.editPassword(data)
             .then((response) => {
                 console.log(response.data);
-               
+                if (response.status === 200) {
+
+                    setEditingField(null);
+                    setPasswordError('');
+                }
+
             })
             .catch((error) => {
                 console.error(error);
@@ -119,14 +137,14 @@ const EditPage = () => {
         localStorage.removeItem('userToken');
         localStorage.removeItem('userId');
         localStorage.removeItem('userPassword');
-    
+
         setConnectedUserToken(null);
         setConnectedUserId(null);
         setConnectedUserPassword(null);
-    
+
 
         navigate('/');
-      };
+    };
 
 
     return (
@@ -160,14 +178,22 @@ const EditPage = () => {
                                 <input
                                     type="text"
                                     value={newUsername}
-                                    onChange={(e) => setNewUsername(e.target.value)}
-                                    className="border border-gray-400 rounded-sm p-2 w-full"
+                                    onChange={(e) => {
+                                        setNewUsername(e.target.value);
+                                        setUsernameError(''); // Réinitialiser l'erreur dès que l'utilisateur modifie l'input
+                                    }}
+                                    className={
+                                        "border rounded-sm p-2 w-full " + (usernameError ? "border-red-500" : "border-gray-400")
+                                    }
                                 />
+                                {usernameError && (
+                                    <p className="mt-1 text-red-500 text-sm">{usernameError}</p>
+                                )}
                                 <button
                                     className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
                                     onClick={() => {
                                         changeUsername();
-                                        setEditingField(null);
+
                                     }}
                                 >
                                     Sauvegarder
@@ -192,14 +218,22 @@ const EditPage = () => {
                                 <input
                                     type="text"
                                     value={newEmail}
-                                    onChange={(e) => setNewEmail(e.target.value)}
-                                    className="border border-gray-400 rounded-sm p-2 w-full"
+                                    onChange={(e) => {
+                                        setNewEmail(e.target.value);
+                                        setEmailError(''); // Réinitialiser l'erreur dès que l'utilisateur modifie l'input
+                                    }}
+                                    className={
+                                        "border rounded-sm p-2 w-full " + (emailError ? "border-red-500" : "border-gray-400")
+                                    }
                                 />
+                                {emailError && (
+                                    <p className="mt-1 text-red-500 text-sm">{emailError}</p>
+                                )}
                                 <button
                                     className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
                                     onClick={() => {
                                         changeEmail();
-                                        setEditingField(null);
+
                                     }}
                                 >
                                     Sauvegarder
@@ -231,7 +265,7 @@ const EditPage = () => {
                                     className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
                                     onClick={() => {
                                         changePassword();
-                                        setEditingField(null);
+
                                     }}
                                 >
                                     Sauvegarder
@@ -251,7 +285,7 @@ const EditPage = () => {
                             </div>
                         )}
 
-                        <div className="flex justify-center items-center mb-6"> 
+                        <div className="flex justify-center items-center mb-6">
                             <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-600">
                                 se déconnecter
                             </button>
