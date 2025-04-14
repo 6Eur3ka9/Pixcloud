@@ -9,15 +9,6 @@ function CloudPage() {
   const [username, setUsername] = useState('');
   const [pictures, setPictures] = useState([]);
 
-  const toBase64 = uInt8Array => btoa(String.fromCharCode(...uInt8Array));
-  
-  useEffect(() => {
-    fetch('http://localhost:8000/get_user').then(res => res.json()).then(data => {
-        setPicture(`data:image/jpeg;base64,${toBase64(data.img.data)}`);
-      })
-  }, [])
-
-
   useEffect(() => {
     const userid = localStorage.getItem('userId');
     if (!userid) {
