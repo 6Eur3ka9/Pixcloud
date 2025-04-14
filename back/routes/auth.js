@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const UserImage = require('../models/UserImage');
 const multer = require('multer');
 const router = express.Router();
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -17,7 +18,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'profile_pictures',
+    folder: 'pictures',
     allowed_formats: ['jpg', 'png', 'jpeg'],
     public_id: (req, file) => {
       return file.originalname.split('.')[0] + Date.now(); 
@@ -157,6 +158,52 @@ router.put('/edit/email', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Email non valide' });
     console.error(error);
+  }
+});
+
+router.post('/upload', upload.single('file'), async (req, res) => {
+  const { userId } = req.body; // 'userId' est envoyé dans le formData
+  try {
+    if (!userId || !req.file) {
+      return res.status(400).json({ error: 'Invalid input' });
+    }
+    // req.file.path contient l'URL secure fournie par Cloudinary grâce à CloudinaryStorage.
+    const newImage = new UserImage({
+      user: userId,
+      url: req.file.path, 
+    });
+    
+    await newImage.save();
+    res.status(201).json({ 
+      message: 'Image uploaded and added successfully', 
+      imageUrl: req.file.path 
+    });
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error uploading image' });
+  }
+});
+
+router.get('/pictures/:userid', async (req, res) => {
+  const { userid } = req.params;
+  
+  if (!userid) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+  try {
+    // Recherche toutes les images correspondant à l'utilisateur
+    const images = await UserImage.find({ user: userid });
+    
+    // Si aucune image n'est trouvée, on retourne une réponse adéquate
+    if (!images || images.length === 0) {
+      return res.status(404).json({ error: 'Aucune image trouvée pour cet utilisateur' });
+    }
+
+    res.status(200).json({ images });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des images:', error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des images' });
   }
 });
 

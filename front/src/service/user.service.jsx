@@ -34,6 +34,10 @@ const editPassword = (data) => {
     return AxiosClient.put('/edit/password', data);
 }
 
+const getAllPicturesbyUserId = (userId) => {
+    return AxiosClient.get(`/pictures/${userId}`);
+}
+
 
 export const UserService = {
     resgister,
@@ -44,5 +48,6 @@ export const UserService = {
     editUsername,
     editEmail,
     editPassword,
+    getAllPicturesbyUserId,
 
 }
