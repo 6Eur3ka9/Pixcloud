@@ -9,6 +9,8 @@ function CloudPage() {
   const [username, setUsername] = useState('');
   const [pictures, setPictures] = useState([]);
 
+  const toBase64 = uInt8Array => btoa(String.fromCharCode(...uInt8Array));
+  
   useEffect(() => {
     const userid = localStorage.getItem('userId');
     if (!userid) {
@@ -20,11 +22,15 @@ function CloudPage() {
       .then((response) => {
         console.log('Response:', response.data);
         // Suppose que votre API renvoie { images: [...] }
-        setPictures(response.data.images);
       })
       .catch((error) => {
         console.error(error);
       });
+
+      
+    UserService.getAllPicturesbyUserId(userid).then((response) => {
+      setPictures(image.data);
+    })
 
     // Récupération des données utilisateur
     UserService.getUserById(userid)
@@ -48,6 +54,7 @@ function CloudPage() {
       UserService.uploadPicture(formData)
         .then((response) => {
           console.log('Fichier uploadé avec succès :', response.data);
+          this.setState({ data });
           // Optionnel : mettre à jour la liste des images après upload
         })
         .catch((error) => {
