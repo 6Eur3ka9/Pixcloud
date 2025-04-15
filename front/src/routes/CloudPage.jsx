@@ -48,7 +48,7 @@ function CloudPage() {
       UserService.uploadPicture(formData)
         .then((response) => {
           console.log('Fichier uploadé avec succès :', response.data);
-          // Optionnel : mettre à jour la liste des images après upload
+         
         })
         .catch((error) => {
           console.error('Erreur lors de l\'upload du fichier :', error);

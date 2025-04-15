@@ -8,6 +8,7 @@ import EditPage from './routes/EditPage';
 import PublicRoute from './service/PublicRoute'; // ou dans votre dossier service
 import ContactPage from './routes/ContactPage';
 import LegalMentions from './routes/LegalMentions';
+import AboutUs from './routes/AboutUs';
 
 function App() {
   return (
@@ -117,7 +118,7 @@ function App() {
               <LegalMentions />
             </div>
           } />
-          {/* <Route path="/aboutus" element={
+          <Route path="/aboutus" element={
             <div
               style={{
                 overflow: 'hidden',
@@ -128,7 +129,7 @@ function App() {
             >
               <AboutUs />
             </div>
-          } /> */}
+          } />
         </Routes>
       
       </Router>

@@ -3,6 +3,7 @@ import logo from '../assets/logo.png'
 import { UserService } from '../service/user.service';
 import Footer from '../components/footer';
 import emailjs from 'emailjs-com';
+import Navbar from '../components/navbar';
 
 const ContactPage = () => {
     const [username, setUsername] = useState('');
@@ -47,9 +48,7 @@ const ContactPage = () => {
 
     useEffect(() => {
         const userid = localStorage.getItem('userId');
-        if (!userid) {
-          window.location.href = '/login';
-        }
+       
    
     
     
@@ -66,33 +65,37 @@ const ContactPage = () => {
 
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
-            <nav
+            {!username ? (
+                <Navbar />
+            ) : (
+                <nav
                     className="bg-white text-black"
                     style={{ boxShadow: "0px -1px 7px 12px rgba(238, 26, 26, 0.8)" }}
-                  >
+                >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                      <div className="flex items-center justify-between h-18">
-                        <div className="flex items-center">
-                          <a href="/">
-                            <img src={logo} alt="Logo" className="h-22 mt-6" />
-                          </a>
+                        <div className="flex items-center justify-between h-18">
+                            <div className="flex items-center">
+                                <a href="/">
+                                    <img src={logo} alt="Logo" className="h-22 mt-6" />
+                                </a>
+                            </div>
+                            <div className="flex space-x-4">
+                                <a
+                                    href="/edit"
+                                    className="font-bold text-xl hover:scale-110 duration-300 ease-in-out cursor-pointer"
+                                >
+                                    {username}
+                                </a>
+                            </div>
                         </div>
-                        <div className="flex space-x-4">
-                          <a
-                            href="/edit"
-                            className="font-bold text-xl hover:scale-110 duration-300 ease-in-out cursor-pointer"
-                          >
-                            {username}
-                          </a>
-                        </div>
-                      </div>
                     </div>
-                  </nav>
+                </nav>
+            )}
             <div className="flex-1 flex justify-center items-center px-6 lg:px-20">
     
     <div className="flex justify-center">
 
-        <form ref={form} onSubmit={sendEmail} className="bg-white border-[0.5px] w-105 h-auto rounded-lg m-6">
+        <form ref={form} onSubmit={sendEmail} className="bg-white border-[0.5px] w-105 h-auto rounded-lg m</div>-6">
             <label className=" flex justify-center mb-4 mt-6 font-bold">CONTACTEZ-NOUS</label>
             <p className="text-medium font-medium text-center mb-8">Si vous avez des questions ou des commentaires, n'hésitez pas à nous contacter via le formulaire ci-dessous.</p>
         
