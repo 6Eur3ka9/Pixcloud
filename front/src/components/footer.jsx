@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <footer className="bg-gray-800 text-white py-7">
             <div className="flex justify-center space-x-6">
-                <Link to="/contact-us" className="hover:underline">Nous contacter</Link>
+                <Link to="/contactpage" className="hover:underline">Nous contacter</Link>
                 <Link to="/legalmentions" className="hover:underline">Mentions légales</Link>
                 <Link to="/aboutus" className="hover:underline">Qui sommes nous</Link>
             </div>
