@@ -9,7 +9,7 @@ function CloudPage() {
   const [username, setUsername] = useState('');
   const [pictures, setPictures] = useState([]);
 
-  const toBase64 = uInt8Array => btoa(String.fromCharCode(...uInt8Array));
+ 
   
   useEffect(() => {
     const userid = localStorage.getItem('userId');
@@ -17,11 +17,11 @@ function CloudPage() {
       window.location.href = '/login';
     }
 
-    // Récupération de toutes les images de l'utilisateur
+
     UserService.getAllPicturesbyUserId(userid)
       .then((response) => {
         console.log('Response:', response.data);
-        // Suppose que votre API renvoie { images: [...] }
+   
       })
       .catch((error) => {
         console.error(error);
@@ -32,7 +32,6 @@ function CloudPage() {
       setPictures(image.data);
     })
 
-    // Récupération des données utilisateur
     UserService.getUserById(userid)
       .then((response) => {
         setUsername(response.data.username);
