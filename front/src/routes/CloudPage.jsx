@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -10,50 +11,31 @@ function CloudPage() {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
+    const userid = localStorage.getItem('userId');
+    if (!userid) {
       window.location.href = '/login';
-      return; 
     }
-  
-  
-    const fetchData = () => {
-      UserService.getAllPicturesbyUserId(userId)
-        .then((response) => {
-          console.log('Response: AL', response.data);
-  
-          if (response.data.length >= 100) {
-            alert('Vous avez atteint le nombre maximum de photos autorisées.');
-            return;
-          } else {
-            console.log('Vous pouvez ajouter des photos.');
-          }
-          
-        
-          setPictures(response.data.images);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-  
-      UserService.getUserById(userId)
-        .then((response) => {
-          setUsername(response.data.username);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
 
-    fetchData();
-  
-   
-    const intervalId = setInterval(fetchData, 3000);
-  
-  
-    return () => clearInterval(intervalId);
-  }, []);  
-  
+    // Récupération de toutes les images de l'utilisateur
+    UserService.getAllPicturesbyUserId(userid)
+      .then((response) => {
+        console.log('Response:', response.data);
+        // Suppose que votre API renvoie { images: [...] }
+        setPictures(response.data.images);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+
+    UserService.getUserById(userid)
+      .then((response) => {
+        setUsername(response.data.username);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -75,9 +57,23 @@ function CloudPage() {
     }
   };
 
+  //Je clique sur le bouton,
+  //J'ATTEND de cliquer sur le l'img à supprimer pour la supprimer
+  //Je supprime l'image cliquée
+  //const removePicture = (pictureIndex) => setPictures(pictures.filter((_, a) => a !== pictureIndex));
+  
   const handleDelete = () => {
-    // Implémentez la logique de suppression si besoin
-  };
+      const temp = [...pictures]
+      temp.splice(index, 1)
+      setPictures(temp)
+
+    UserService.deletePicture(formData).then((response) => {
+        console.log('Fichier supprimé avec succès :', response.data);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la suppression du fichier :', error);
+      })
+    }
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
@@ -148,8 +144,9 @@ function CloudPage() {
           </label>
           <p className=' font-medium text-lg mt-2'>il vous reste {100 - pictures.length}/100 images</p>
             </div>
-         
+            
           <button
+            key={pictures[index]}
             onClick={handleDelete}
             className="bg-red-500 font-bold pl-10 pr-10 pt-2 pb-2 rounded-sm cursor-pointer hover:scale-110 duration-300 ease-in-out"
           >
@@ -161,5 +158,6 @@ function CloudPage() {
     </div>
   );
 }
+
 
 export default CloudPage;
