@@ -118,7 +118,7 @@ function App() {
               <LegalMentions />
             </div>
           } />
-          <Route path="/aboutus" element={
+          {<Route path="/aboutus" element={
             <div
               style={{
                 overflow: 'hidden',
@@ -129,7 +129,7 @@ function App() {
             >
               <AboutUs />
             </div>
-          } />
+          } />}
         </Routes>
       
       </Router>
