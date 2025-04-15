@@ -6,6 +6,8 @@ import { UserProvider } from './service/context.provider';
 import CloudPage from './routes/CloudPage';
 import EditPage from './routes/EditPage';
 import PublicRoute from './service/PublicRoute'; // ou dans votre dossier service
+import LegalMentions from './routes/LegalMentions';
+import AboutUs from './routes/AboutUs';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/edit" element={<EditPage />} />
             <Route path="/register" element={<Sign />} />
             <Route path="/mainpage" element={<CloudPage />} />
+            <Route path="/legalmentions" element={<LegalMentions />} />
+            <Route path="/aboutus" element={<AboutUs />} />
           </Routes>
         </Router>
       </UserProvider>
