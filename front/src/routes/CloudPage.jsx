@@ -9,28 +9,23 @@ function CloudPage() {
   const [username, setUsername] = useState('');
   const [pictures, setPictures] = useState([]);
 
- 
-  
   useEffect(() => {
     const userid = localStorage.getItem('userId');
     if (!userid) {
       window.location.href = '/login';
     }
 
-
+    // Récupération de toutes les images de l'utilisateur
     UserService.getAllPicturesbyUserId(userid)
       .then((response) => {
         console.log('Response:', response.data);
-   
+        // Suppose que votre API renvoie { images: [...] }
+        setPictures(response.data.images);
       })
       .catch((error) => {
         console.error(error);
       });
 
-      
-    UserService.getAllPicturesbyUserId(userid).then((response) => {
-      setPictures(image.data);
-    })
 
     UserService.getUserById(userid)
       .then((response) => {
@@ -39,7 +34,7 @@ function CloudPage() {
       .catch((error) => {
         console.error(error);
       });
-  }, [pictures]);
+  }, []);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -53,7 +48,6 @@ function CloudPage() {
       UserService.uploadPicture(formData)
         .then((response) => {
           console.log('Fichier uploadé avec succès :', response.data);
-          this.setState({ data });
           // Optionnel : mettre à jour la liste des images après upload
         })
         .catch((error) => {
@@ -92,7 +86,7 @@ function CloudPage() {
       </nav>
       <div className="flex-1 px-6 lg:px-20 flex items-center">
         <div
-          className="border border-black p-64 rounded flex-1 overflow-auto relative"
+          className=" bg-gray-100 border border-black p-64 rounded flex-1 overflow-auto relative"
           style={{ maxHeight: '500px' }}
         >
           <div className="absolute inset-0 ml-3 mt-5 flex flex-wrap">
