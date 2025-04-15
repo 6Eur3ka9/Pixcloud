@@ -10,31 +10,50 @@ function CloudPage() {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    const userid = localStorage.getItem('userId');
-    if (!userid) {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
       window.location.href = '/login';
+      return; 
     }
+  
+  
+    const fetchData = () => {
+      UserService.getAllPicturesbyUserId(userId)
+        .then((response) => {
+          console.log('Response: AL', response.data);
+  
+          if (response.data.length >= 100) {
+            alert('Vous avez atteint le nombre maximum de photos autorisées.');
+            return;
+          } else {
+            console.log('Vous pouvez ajouter des photos.');
+          }
+          
+        
+          setPictures(response.data.images);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  
+      UserService.getUserById(userId)
+        .then((response) => {
+          setUsername(response.data.username);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
 
-    // Récupération de toutes les images de l'utilisateur
-    UserService.getAllPicturesbyUserId(userid)
-      .then((response) => {
-        console.log('Response:', response.data);
-        // Suppose que votre API renvoie { images: [...] }
-        setPictures(response.data.images);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-
-    UserService.getUserById(userid)
-      .then((response) => {
-        setUsername(response.data.username);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+    fetchData();
+  
+   
+    const intervalId = setInterval(fetchData, 3000);
+  
+  
+    return () => clearInterval(intervalId);
+  }, []);  
+  
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];

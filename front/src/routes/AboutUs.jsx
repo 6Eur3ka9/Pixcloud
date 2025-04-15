@@ -10,7 +10,7 @@ function AboutUs() {
             <h1 className="text-center mb-5 font-bold">Qui sommes nous ?</h1>
             <p>Pixcloud est un projet étudiant réalisé dans le cadre de la formation "TP - Développeur Web" de l'AFEC.</p>
             <p>Pixcloud permet à ses utilisateurs de sauvegarder jusqu'à 100 photos dans un cloud sécurisé et facile d'utilisation.</p>
-            <p>Ce projet a été réalisé par <a href="https://github.com/6Eur3ka9" className="text-blue-800 hover:underline">6Eur3ka9</a> et <a href="https://github.com/Luna-bf" className="text-blue-800 hover:underline">Luna-bf</a>.</p>
+            <p>Ce projet a été réalisé par <a href="https://github.com/6Eur3ka9" target="_blank" className="text-blue-800 hover:underline">6Eur3ka9</a> et <a href="https://github.com/Luna-bf" target="_blank" className="text-blue-800 hover:underline">Luna-bf</a>.</p>
 
             <a href="/mainpage" className="flex justify-center text-purple-400 hover:text-purple-600 font-medium mt-5">Revenir à la page principale</a>
         </div>
