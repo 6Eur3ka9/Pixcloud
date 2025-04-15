@@ -62,18 +62,15 @@ function CloudPage() {
   //Je supprime l'image cliquée
   //const removePicture = (pictureIndex) => setPictures(pictures.filter((_, a) => a !== pictureIndex));
   
-  const handleDelete = () => {
-      const temp = [...pictures]
-      temp.splice(index, 1)
-      setPictures(temp)
+  function handleDelete() {
+    setPictures(pictures.slice(0, -1));
+  }
+  /*const handleDelete = (deletePicture) => {
 
-    UserService.deletePicture(formData).then((response) => {
-        console.log('Fichier supprimé avec succès :', response.data);
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la suppression du fichier :', error);
-      })
-    }
+    const newPictures = pictures.filter((picture) => picture !== deletePicture)
+    setPictures(newPictures);
+    
+  }*/
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
@@ -107,12 +104,12 @@ function CloudPage() {
           <div className="absolute inset-0 ml-3 mt-5 flex flex-wrap">
             {Array.from({ length: pictures.length }).map((_, index) => (
               <div
-                key={index}
+                key={pictures.picture}
                 className="w-[230px] h-[230px] bg-white m-2 rounded overflow-hidden flex items-center justify-center"
               >
                 {pictures[index] ? (
                   <img
-                    src={pictures[index].url}
+                    src={pictures[index]}
                     alt={`user-pic-${index}`}
                     className="w-full h-full object-cover"
                   />
@@ -123,7 +120,7 @@ function CloudPage() {
             ))}
           </div>
         </div>
-        <div id="button" className="flex flex-col space-y-[95%] ml-10">
+        <div key={pictures.id} id="button" className="flex flex-col space-y-[95%] ml-10">
             <div>
 
           <label className="bg-purple-600 w-50 text-center font-bold flex flex-col items-center rounded-sm cursor-pointer hover:scale-105 duration-300 ease-in-out">
@@ -145,13 +142,9 @@ function CloudPage() {
           <p className=' font-medium text-lg mt-2'>il vous reste {100 - pictures.length}/100 images</p>
             </div>
             
-          <button
-            key={pictures[index]}
-            onClick={handleDelete}
-            className="bg-red-500 font-bold pl-10 pr-10 pt-2 pb-2 rounded-sm cursor-pointer hover:scale-110 duration-300 ease-in-out"
-          >
-            Supprimer
-          </button>
+            {pictures.map((picture, index) => (
+              <button key={pictures.id} onClick={() => handleDelete(picture)} className="bg-red-500 font-bold pl-10 pr-10 pt-2 pb-2 rounded-sm cursor-pointer hover:scale-110 duration-300 ease-in-out">Supprimer</button>
+            ))}
         </div>
       </div>
       <Footer />
