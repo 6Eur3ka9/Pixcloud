@@ -14,8 +14,8 @@ const getUserById = (userId) => {
     return AxiosClient.get(`/user/${userId}`);
 }
 
-const deletePicture = (picture) => {
-    return AxiosClient.post(`/delete/${picture}`, picture);
+const deletePicture = (data) => {
+    return AxiosClient.post(`/delete`, data);
 }
 
 const uploadPicture = (data) => {

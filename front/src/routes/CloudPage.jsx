@@ -74,6 +74,9 @@ function CloudPage() {
     const userId = localStorage.getItem('userId');
     const formData = new FormData();
     formData.append('pictureId', pictureId);
+    console.log(pictureId);
+    console.log(userId);
+    
     formData.append('userId', userId);
 
     UserService.deletePicture(formData)
@@ -127,7 +130,7 @@ return (
                     {pictures.map((picture) => (
                         <div
                             key={picture.id}
-                            className="relative w-[230px] h-[230px] bg-white m-2 rounded overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 duration-300 ease-in-outr"
+                            className="relative w-[230px] h-[230px] bg-white m-2 rounded overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 duration-300 ease-in-out"
                             onClick={() => handleOpen(picture.url)}
                         >
                             <img
@@ -151,9 +154,9 @@ return (
                 </div>
             </div>
 
-            <div id="button" className="flex flex-col space-y-[95%] ml-10">
+            <div id="button" className="flex flex-col space-y-[75%] ml-10">
                 <div>
-                    <label className="bg-purple-600 w-50 text-center font-bold flex flex-col items-center rounded-sm cursor-pointer hover:scale-105 duration-300 ease-in-out">
+                    <label className="bg-purple-700 border-[0.2px] pb-1  w-50 text-center font-bold flex flex-col items-center rounded-sm cursor-pointer hover:scale-105 duration-300 ease-in-out">
                         <img src={image} alt="image" className="w-24 mt-10 mb-10" />
                         <span>Cliquez pour sélectionner l'image à ajouter</span>
                         <input
@@ -164,7 +167,7 @@ return (
                         />
                     </label>
                     <p className="font-medium text-lg mt-2">
-                        Il vous reste {100 - pictures.length}/100 images
+                        Il vous reste {100 - pictures.length}/100 emplacements
                     </p>
                 </div>
                 <button
