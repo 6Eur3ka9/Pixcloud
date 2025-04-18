@@ -185,6 +185,33 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
+router.delete('/delete', async (req, res) => {
+  const { pictureId } = req.params.pictureId;
+  const { userId } = req.body;
+
+  console.log(pictureId);
+
+  try {
+    if(!pictureId || !req.file) {
+      return res.status(400).json({ error: 'Invalid action' });
+    }
+
+    const newImageDeletion = new ImageDelete({
+      user: userId,
+      pictureId: req.file.path //On demande à avoir le chemin de l'image
+    })
+
+    await newImageDeletion.delete();
+    res.status(201).json({
+      message: 'Image deleted successfully',
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error during the image deletion." });
+  }
+});
+
 router.get('/pictures/:userid', async (req, res) => {
   const { userid } = req.params;
   
