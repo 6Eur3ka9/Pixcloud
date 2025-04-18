@@ -6,7 +6,32 @@ function LegalMentions() {
 
     return (
     <div className="min-h-screen flex justify-center flex-col bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
-    <Navbar />
+    {!username ? (
+                <Navbar />
+            ) : (
+                <nav
+                    className="bg-white text-black"
+                    style={{ boxShadow: "0px -1px 7px 12px rgba(238, 26, 26, 0.8)" }}
+                >
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-18">
+                            <div className="flex items-center">
+                                <a href="/">
+                                    <img src={logo} alt="Logo" className="h-22 mt-6" />
+                                </a>
+                            </div>
+                            <div className="flex space-x-4">
+                                <a
+                                    href="/edit"
+                                    className="font-bold text-xl hover:scale-110 duration-300 ease-in-out cursor-pointer"
+                                >
+                                    {username}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            )}
         <div className="bg-white p-5 w-4xl m-auto rounded-lg border-[0.5px]">
             <h1 className="text-center mb-5 font-bold">Mentions légales :</h1>
 
