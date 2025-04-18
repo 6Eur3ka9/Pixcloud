@@ -5,7 +5,7 @@ import Sign from './routes/Sign';
 import { UserProvider } from './service/context.provider';
 import CloudPage from './routes/CloudPage';
 import EditPage from './routes/EditPage';
-import PublicRoute from './service/PublicRoute'; // ou dans votre dossier service
+import PublicRoute from './service/PublicRoute';
 import ContactPage from './routes/ContactPage';
 import LegalMentions from './routes/LegalMentions';
 import AboutUs from './routes/AboutUs';
