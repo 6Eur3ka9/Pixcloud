@@ -20,7 +20,9 @@ const PublicRoute = ({ children }) => {
           if (tokenExpiryMs > Date.now()) {
            
             
-            return <Navigate to="/mainpage" replace />;
+            return  <Navigate to="/mainpage" replace />;
+            
+            
              
           } else {
             console.warn("Token expiré");

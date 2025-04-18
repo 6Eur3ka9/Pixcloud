@@ -28,6 +28,8 @@ const CheckAuth = ({ children }) => {
           localStorage.removeItem("userToken");
           localStorage.removeItem("userPassword");
           navigate('/login');
+         
+          
         }
       } catch (error) {
         console.error("Erreur lors du décodage du token:", error);
