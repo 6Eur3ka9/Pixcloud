@@ -7,7 +7,7 @@ export const UserProvider = ({ children }) => {
   const [connectedUserToken, setConnectedUserToken] = useState(null);
   const [connectedUserPassword, setConnectedUserPassword] = useState(null);
 
-  // Au montage, réhydrate depuis localStorage
+
   useEffect(() => {
     const storedId = localStorage.getItem("userId");
     const storedToken = localStorage.getItem("userToken");

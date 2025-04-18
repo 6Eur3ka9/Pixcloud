@@ -17,6 +17,8 @@ const LoginPage = () => {
     connectedUserPassword,
     setConnectedUserPassword
   } = useUser();
+  const [error, setError] = useState(null);
+  const [errorLogin, setErrorLogin] = useState(null);
   
   const navigate = useNavigate();
 
@@ -59,9 +61,15 @@ const LoginPage = () => {
         localStorage.setItem('userId', response.data.userId);
           localStorage.setItem('userToken' , response.data.token);
           localStorage.setItem('userPassword', data.password); 
+
+
+        setError(false);
+        setErrorLogin(null);
       })
       .catch((error) => {
         console.error(error);
+        setErrorLogin('Erreur lors de la connexion. Vérifiez vos identifiants.');
+        setError(true)
       });
 
     console.log(email, password);
@@ -100,6 +108,11 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            {error && (
+              <div className="mb-4 text-red-500 text-sm text-center">
+                {errorLogin}
+              </div>
+            )}
             <div className="flex justify-between items-center mb-6">
               <a href="#" className="text-sm text-[#A406FF] hover:underline">
                 mot de passe oublier?
