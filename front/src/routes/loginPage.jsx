@@ -114,7 +114,7 @@ const LoginPage = () => {
               </div>
             )}
             <div className="flex justify-between items-center mb-6">
-              <a href="#" className="text-sm text-[#A406FF] hover:underline">
+              <a href="/forgot" className="text-sm text-[#A406FF] hover:underline">
                 mot de passe oublier?
               </a>
               <a href="/register" className="text-sm text-[#A406FF] hover:underline">

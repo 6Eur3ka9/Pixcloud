@@ -9,6 +9,8 @@ import PublicRoute from './service/PublicRoute';
 import ContactPage from './routes/ContactPage';
 import LegalMentions from './routes/LegalMentions';
 import AboutUs from './routes/AboutUs';
+import ForgotPage from './routes/ForgotPage';
+import ResetPasswordPage from './routes/ResetPasswordPage';
 
 function App() {
   return (
@@ -130,7 +132,38 @@ function App() {
               <AboutUs />
             </div>
           } />}
+
+          {
+            <Route path="/forgot" element={
+              <div
+                style={{
+                  overflow: 'hidden',
+                  height: '100vh',
+                  position: 'fixed',
+                  width: '100%',
+                }}
+              >
+                <ForgotPage />
+              </div>
+            } />
+          }
+
+{
+            <Route path="/reset-password" element={
+              <div
+                style={{
+                  overflow: 'hidden',
+                  height: '100vh',
+                  position: 'fixed',
+                  width: '100%',
+                }}
+              >
+                <ResetPasswordPage />
+              </div>
+            } />
+          }
         </Routes>
+        
       
       </Router>
     </UserProvider>

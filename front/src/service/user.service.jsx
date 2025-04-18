@@ -15,7 +15,7 @@ const getUserById = (userId) => {
 }
 
 const deletePicture = (data) => {
-    return AxiosClient.post(`/delete`, data);
+    return AxiosClient.put(`picture/delete`, data);
 }
 
 const uploadPicture = (data) => {
@@ -38,6 +38,14 @@ const getAllPicturesbyUserId = (userId) => {
     return AxiosClient.get(`/pictures/${userId}`);
 }
 
+const resetPassword = (data) => {
+    return AxiosClient.post('/forgot-password', data);
+}
+
+const resetPasswordFinalize = (data) => {
+    return AxiosClient.post('/reset-password', data);
+}
+
 
 export const UserService = {
     resgister,
@@ -49,5 +57,7 @@ export const UserService = {
     editEmail,
     editPassword,
     getAllPicturesbyUserId,
+    resetPassword,
+    resetPasswordFinalize,
 
 }

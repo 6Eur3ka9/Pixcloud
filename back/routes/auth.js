@@ -185,8 +185,10 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-router.delete('/delete', async (req, res) => {
-  const { pictureId } = req.params.pictureId;
+router.put('picture/delete', async (req, res) => {
+  // console.log('le req', req);
+  
+  const { pictureId } = req.params;
   const { userId } = req.body;
 
   console.log(pictureId);
@@ -231,6 +233,58 @@ router.get('/pictures/:userid', async (req, res) => {
   } catch (error) {
     console.error('Erreur lors de la récupération des images:', error);
     res.status(500).json({ error: 'Erreur lors de la récupération des images' });
+  }
+});
+
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'L’e‑mail est requis' });
+  }
+
+  // 1) Vérifier que l’utilisateur existe
+  const user = await User.findOne({ email });
+  if (!user) {
+    // On ne révèle pas l’absence d’adresse en base
+    return res.json({ resetLink: null });
+  }
+
+  // 2) Générer un token JWT valable 1h
+  const token = jwt.sign(
+    { id: user._id },
+    process.env.JWT_RESET_SECRET,
+    { expiresIn: '1h' }
+  );
+
+  // 3) Construire le lien de réinitialisation
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+  return res.json({ resetLink });
+});
+
+router.post('/reset-password', async (req, res) => {
+  const { token, password } = req.body;
+  if (!token || !password) {
+    return res
+      .status(400)
+      .json({ error: 'Le token et le nouveau mot de passe sont requis' });
+  }
+
+  try {
+    // 1) Vérifier et décoder le token
+    const payload = jwt.verify(token, process.env.JWT_RESET_SECRET);
+
+    // 2) Hasher le nouveau mot de passe
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 3) Mettre à jour l’utilisateur
+    await User.findByIdAndUpdate(payload.id, { password: hashedPassword });
+
+    return res.json({ message: 'Mot de passe réinitialisé avec succès' });
+  } catch (err) {
+    console.error('Reset-password error:', err);
+    return res
+      .status(400)
+      .json({ error: 'Token invalide ou expiré' });
   }
 });
 
