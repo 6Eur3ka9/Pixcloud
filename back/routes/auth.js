@@ -185,28 +185,42 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-router.put('picture/delete', async (req, res) => {
-  // console.log('le req', req);
-  
-  const { pictureId } = req.params;
-  const { userId } = req.body;
+// l'url : "http://localhost:4242/api/auth/test" avec la requête GET fonctionne dans Postman, le serveur tourne bien
+// router.get('/test', (req, res) => {
+//   res.send('API is working!');
+// });
 
-  console.log(pictureId);
+router.put('/picture/delete', async (req, res) => {
+  // console.log('le req', req);
+  const { picture, user } = req.body;
+  console.log(user)
+  console.log(picture, 'image loggée')
 
   try {
-    if(!pictureId || !req.file) {
+    
+    if(!picture || !user) {
       return res.status(400).json({ error: 'Invalid action' });
     }
 
-    const newImageDeletion = new ImageDelete({
-      user: userId,
-      pictureId: req.file.path //On demande à avoir le chemin de l'image
-    })
+    const userExist = await User.findById(user);
+    if(!userExist) {
+      return res.status(400).json({ error: 'This user doesn\'t exist' });
+    }
+    
+    //ça marchait pas en faisant 'await UserImage.findById({ picture })' car là je lui renvoyais un Objet
+    const pictureExist = await UserImage.findById(picture);
 
-    await newImageDeletion.delete();
-    res.status(201).json({
-      message: 'Image deleted successfully',
-    });
+    if(!pictureExist) {
+      return res.status(400).json({ error: 'This image doesn\'t exist' });
+    }
+
+    const deletePicture = await UserImage.deleteOne({ _id: picture });
+
+    if (deletePicture.deletedCount == 1) {
+      return res.status(200).json({ message : 'Image deleted successfully' });
+    } else {
+      return res.status(400).json({ error: 'Image not found' });
+    }
 
   } catch (error) {
     console.error(error);
