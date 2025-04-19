@@ -15,7 +15,7 @@ const getUserById = (userId) => {
 }
 
 const deletePicture = (data) => {
-    return AxiosClient.put(`picture/delete`, data);
+    return AxiosClient.put(`/picture/delete`, data);
 }
 
 const uploadPicture = (data) => {
