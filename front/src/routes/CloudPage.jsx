@@ -72,19 +72,13 @@ function CloudPage() {
 
   const handleDelete = (pictureId) => {
     const userId = localStorage.getItem('userId');
-    // const formData = new FormData();
-    // formData.append('pictureId', pictureId);
+    const formData = {picture: pictureId, user: userId};
     console.log(pictureId);
     console.log(userId);
-    const data = {
-        pictureId: pictureId,
-        userId: userId,
-    }
-    // formData.append('userId', userId);
 
-    UserService.deletePicture(data)
+    UserService.deletePicture(formData)
       .then(() => UserService.getAllPicturesbyUserId(userId))
-      .then((resp) => setPictures(resp.data.images))
+      .then((res) => setPictures(res.data.images))
       .catch((error) => console.error(error));
   };
 
@@ -133,19 +127,18 @@ return (
                     {pictures.map((picture) => (
                         <div
                             key={picture.id}
-                            className="relative w-[200px] h-[200px] bg-white m-2 rounded overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 duration-300 ease-in-out"
+                            className="relative w-[230px] h-[230px] bg-white m-2 rounded overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 duration-300 ease-in-out"
                             onClick={() => handleOpen(picture.url)}
                         >
                             <img
                                 src={picture.url}
-                                alt={`user-pic-${picture.id}`}
+                                alt={`user-pic-${picture._id}`}
                                 className="w-full h-full object-cover"
                             />
                             {visibility && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        
                                         handleDelete(picture.url);
                                     }}
                                     className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-sm rounded hover:bg-red-700"
@@ -160,7 +153,7 @@ return (
 
             <div id="button" className="flex flex-col space-y-[75%] ml-10">
                 <div>
-                    <label id='da' className="bg-purple-700 border-[0.2px] pb-1  w-50 text-center font-bold flex flex-col items-center rounded-sm cursor-pointer hover:scale-105 duration-300 ease-in-out ">
+                    <label className="bg-purple-700 border-[0.2px] pb-1  w-50 text-center font-bold flex flex-col items-center rounded-sm cursor-pointer hover:scale-105 duration-300 ease-in-out">
                         <img src={image} alt="image" className="w-24 mt-10 mb-10" />
                         <span>Cliquez pour sélectionner l'image à ajouter</span>
                         <input
