@@ -1,7 +1,24 @@
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
+import logo from '../assets/logo.png'
+import { useState, useEffect } from "react";
+import { UserService } from '../service/user.service';
 
 function AboutUs() {
+
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        const userid = localStorage.getItem('userId');
+
+        UserService.getUserById(userid)
+          .then((response) => {
+            setUsername(response.data.username);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, []);
 
     return (
     <div className="min-h-screen flex justify-center flex-col bg-gradient-to-b from-[#A406FF] via-[#D580FF] to-transparent">
